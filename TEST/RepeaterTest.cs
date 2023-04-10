@@ -32,7 +32,7 @@ namespace TEST {
 
                 contentString = JsonConvert.SerializeObject(repeaterModel);
 
-                using (HttpResponseMessage response = client.PostAsync(@"http://localhost", content).Result) {
+                using (HttpResponseMessage response = client.PostAsync(@"http://localhost/index.php", content).Result) {
                     string responseContent = response.Content.ReadAsStringAsync().Result;
 
                     Assert.AreEqual((int)HttpStatusCode.OK, (int)response.StatusCode);
