@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using RepeaterModule.API;
-using RepeaterModule.API.SOAP;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -21,22 +18,17 @@ namespace TEST {
         [TestCategory("Repeater")]
         public void PostTypeSOAP() {
             using (HttpClient client = new HttpClient()) {
-                RepeaterSoapModel repeaterModel = new RepeaterSoapModel() {
+                var repeaterModel = new {
                     moduleId = new Guid("ecfd003a-8454-402e-b05c-804a19736c0b"),
                     targetUri = "http://www.dneonline.com/calculator.asmx",
                     httpMethod = "POST",
                     authType = "NONE",
-                    headers = new List<RepeaterHeader>(),
                     body = createCalculatorXml()
                 };
-
-                repeaterModel.headers.Add(new RepeaterHeader() { key = "SOAPAction", value = "http://tempuri.org/Multiply" });
 
                 string contentString = JsonConvert.SerializeObject(repeaterModel);
 
                 StringContent content = new StringContent(contentString, Encoding.UTF8, "text/json");
-
-                repeaterModel.authType = "NONE";
 
                 contentString = JsonConvert.SerializeObject(repeaterModel);
 
