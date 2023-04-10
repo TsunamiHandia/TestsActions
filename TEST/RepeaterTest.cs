@@ -1,38 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Primitives;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using RepeaterModule.API;
+using RepeaterModule.API.SOAP;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Runtime.Versioning;
 using System.Text;
 using System.Xml;
 
 namespace TEST {
     [TestClass]
-    public class RepeaterTest
-    {
+    public class RepeaterTest {
         private const string DEFAULT_ACE_OLEDB = "Microsoft.ACE.OLEDB.12.0";
-        private SQL sql;
-        private string[] urls = { "http://localhost:9520", "https://localhost:9521" };
-               
         
+        private string[] urls = { "http://localhost:9520", "https://localhost:9521" };
+
+
         [TestMethod]
         [TestCategory("Repeater")]
-        public void PostTypeSOAP()
-        {            
-            using (HttpClient client = new HttpClient())
-            {
-                RepeaterSoapModel repeaterModel = new RepeaterSoapModel()
-                {
+        public void PostTypeSOAP() {
+            using (HttpClient client = new HttpClient()) {
+                RepeaterSoapModel repeaterModel = new RepeaterSoapModel() {
                     moduleId = new Guid("ecfd003a-8454-402e-b05c-804a19736c0b"),
                     targetUri = "http://www.dneonline.com/calculator.asmx",
                     httpMethod = "POST",
@@ -50,70 +39,44 @@ namespace TEST {
                 repeaterModel.authType = "NONE";
 
                 contentString = JsonConvert.SerializeObject(repeaterModel);
-                
-                using (HttpResponseMessage response = client.PostAsync(@"http://localhost", content).Result)
-                {
+
+                using (HttpResponseMessage response = client.PostAsync(@"http://localhost", content).Result) {
                     string responseContent = response.Content.ReadAsStringAsync().Result;
 
-                    Assert.AreEqual((int) HttpStatusCode.OK, (int) response.StatusCode);
+                    Assert.AreEqual((int)HttpStatusCode.OK, (int)response.StatusCode);
                     Assert.AreEqual("", responseContent);
                 }
             }
         }
 
-        public class RepeaterSqlModel {
-            [JsonProperty(Required = Required.Always)]
-            /// <summary>
-            /// Id del módulo
-            /// </summary>
-            public Guid moduleId { get; set; }
+        private string createCalculatorXml() {
+            XmlDocument xmlDocument = new XmlDocument();
+            XmlNode xmlNode = xmlDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDocument.AppendChild(xmlNode);
 
-            [JsonProperty(Required = Required.AllowNull)]
-            /// <summary>
-            /// Host
-            /// </summary>
-            public string host { get; set; }
+            XmlElement soapEnvelope = xmlDocument.CreateElement("soap", "Envelope", "http://schemas.xmlsoap.org/soap/envelope/");
+            soapEnvelope.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            soapEnvelope.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+            soapEnvelope.SetAttribute("xmlns:soap", "http://schemas.xmlsoap.org/soap/envelope/");
+            xmlDocument.AppendChild(soapEnvelope);
 
-            [JsonProperty(Required = Required.AllowNull)]
-            /// <summary>
-            /// Port
-            /// </summary>
-            public string port { get; set; }
+            XmlNode bodyNode = xmlDocument.CreateElement("soap", "Body", "http://schemas.xmlsoap.org/soap/envelope/");
+            soapEnvelope.AppendChild(bodyNode);
 
-            [JsonProperty(Required = Required.Always)]
-            /// <summary>
-            /// Database. En el caso de Access, la ruta al fichero
-            /// </summary>
-            public string database { get; set; }
+            XmlNode multiplyNode = xmlDocument.CreateElement("Multiply", "http://tempuri.org/");
 
-            [JsonProperty(Required = Required.Always)]
-            /// <summary>
-            /// Tipo de base de datos, DatabaseType [SqlServer, SqlServerCE, Access]
-            /// </summary>
-            public string databaseType { get; set; }
+            XmlNode intNode = xmlDocument.CreateElement("intA", "http://tempuri.org/");
+            intNode.InnerText = "688969";
+            multiplyNode.AppendChild(intNode);
 
-            [JsonProperty(Required = Required.Always)]
-            /// <summary>
-            /// Tipo de autenticación
-            /// </summary>
-            public string authType { get; set; }
+            intNode = xmlDocument.CreateElement("intB", "http://tempuri.org/");
+            intNode.InnerText = "29";
+            multiplyNode.AppendChild(intNode);
 
-            [JsonProperty(Required = Required.AllowNull)]
-            /// <summary>
-            /// User
-            /// </summary>
-            public string user { get; set; }
+            bodyNode.AppendChild(multiplyNode);
 
-            [JsonProperty(Required = Required.AllowNull)]
-            /// <summary>
-            /// Password
-            /// </summary>
-            public string password { get; set; }
 
-            [JsonProperty(Required = Required.Always)]
-            /// <summary>
-            /// Query
-            /// </summary>
-            public string query { get; set; }
+            return xmlDocument.OuterXml;
         }
     }
+ }
