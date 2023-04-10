@@ -15,7 +15,7 @@ jobs:
     - name: Crear fichero php para rebotar peticiones
       run: |
         New-Item C:\tools\Apache24\htdocs\index.php
-        Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);'        
+        Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);?>'        
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
     - name: Stop IIS
       run: Stop-Service -Name w3svc
