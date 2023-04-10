@@ -17,10 +17,11 @@ jobs:
         New-Item C:\tools\Apache24\htdocs\index.php
         Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);' 
     
-    - name: Crear fichero php para rebotar peticiones IIS
-      run: |
-        New-Item C:\inetpub\wwwroot\index.php
-        Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
+#    - name: Crear fichero php para rebotar peticiones IIS
+#      run: |
+#        New-Item C:\inetpub\wwwroot\index.php
+#        Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
+ 
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
     - name: Stop IIS
       run: Stop-Service -Name w3svc
@@ -28,6 +29,8 @@ jobs:
      
     - name: Start Apache    
       run: |
+         dir c:\
+         dir c:\tools\Apache24 /s
          Set-Service -Name Apache -StartupType Automatic
          Start-Service -DisplayName Apache
          more c:\tools\Apache24\conf\extra\httpd-fcgid.conf
