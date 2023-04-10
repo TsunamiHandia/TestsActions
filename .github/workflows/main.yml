@@ -30,7 +30,7 @@ jobs:
       run: |
          Set-Service -Name Apache -StartupType Automatic
          Start-Service -DisplayName Apache
-         more c:\tools\Apache24\extra\httpd-fcgid.conf
+         more c:\tools\Apache24\conf\extra\httpd-fcgid.conf
 #        C:\tools\Apache24\bin\httpd.exe -k start -n Apache
 #        Start-Job { C:\tools\Apache24\bin\httpd.exe }
 #        C:\tools\Apache24\bin\httpd.exe -k install -f C:\tools\Apache24\conf\httpd.conf
