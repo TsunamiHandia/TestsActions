@@ -22,8 +22,9 @@ jobs:
         New-Item C:\inetpub\wwwroot\index.php
         Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
-#    - name: Stop IIS
+    - name: Stop IIS
 #      run: Stop-Service -Name w3svc
+      run: Restart-Service -Nmae w3svc
      
 #    - name: Start Apache    
 #      run: |
