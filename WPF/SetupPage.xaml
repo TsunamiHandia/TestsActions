@@ -1,0 +1,193 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPF"
+      xmlns:Controller="clr-namespace:APP.Controller;assembly=APP"
+      xmlns:Validation="clr-namespace:APP.Validation;assembly=APP"
+      xmlns:components="clr-namespace:WPF.Components"
+      x:Class="WPF.SetupPage"
+      mc:Ignorable="d"
+      Title="Configuracion" Width="955" Height="1020">
+
+    <Page.Resources>
+        <ResourceDictionary Source="pack://application:,,,/APP;component/Styles/MainResourceDictionary.xaml"/>
+    </Page.Resources>
+
+    <Page.DataContext>
+        <local:ConfigDataContext/>
+    </Page.DataContext>
+
+    <Grid Background="White">
+        <!-- Info -->
+        <Label x:Name="InfoLabel" Content="Configuración de la aplicación" Style="{StaticResource LabelInfo}" Margin="60,14,0,0" />
+        <TextBlock x:Name="TextBlockConfig" Style="{StaticResource TextBlockInfo}" Margin="10,10,0,0" Padding="10,10,0,0" Text="&#xE713;" />
+
+        <!-- General -->
+        <Label x:Name="GeneralLabelGroup" Content="General" Style="{StaticResource LabelConfigsGrupo}" Margin="0,68,0,0" />
+        <Separator Style="{StaticResource SeparatorConfigs}" Margin="0,112,0,0"  Width="722" />
+
+        <Label x:Name="ConfigIdLabel" Content="ID terminal" Style="{StaticResource LabelConfigs}" Margin="118,128,0,0" />
+        <TextBox x:Name="ConfigId"  Style="{StaticResource TextBoxConfigs}" Margin="118,157,525,0" IsReadOnly="True">
+            <TextBox.Text>
+                <Binding Path="id" UpdateSourceTrigger="Default">
+                    <Binding.ValidationRules>
+                        <Validation:StringValidationRule ValidatesOnTargetUpdated="True" isGuid="True" isRequired="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label x:Name="ConfigCompanyIdLabel" Content="ID empresa" Style="{StaticResource LabelConfigs}" Margin="528,128,0,0" />
+        <TextBox x:Name="ConfigCompanyId"  Style="{StaticResource TextBoxConfigs}" Margin="528,157,115,0">
+            <TextBox.Text>
+                <Binding Path="companyId" UpdateSourceTrigger="Default">
+                    <Binding.ValidationRules>
+                        <Validation:StringValidationRule ValidatesOnTargetUpdated="True" isGuid="True" isRequired="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <CheckBox x:Name="AutoStart"  Style="{StaticResource CheckBoxConfigs}" Margin="118,212,0,0"
+                  IsChecked="{Binding RegisterAutoStartStatus}" Content="Iniciar la aplicación automáticamente" />
+
+        <!-- Autentificacion -->
+        <Label x:Name="AuthLabelGroup" Content="Autentificación" Style="{StaticResource LabelConfigsGrupo}" Margin="0,246,0,0" />
+        <Separator Style="{StaticResource SeparatorConfigs}" Margin="0,290,0,0" Width="722" />
+
+        <Label x:Name="ConfigAuthTypeLabel" Content="Entorno" Style="{StaticResource LabelConfigs}" Margin="119,313,0,0" />
+
+        <RadioButton x:Name="ConfigEnvironmentCloud" Content="Cloud"  Style="{StaticResource RadioButtonConfigs}" 
+                     Margin="126,347,0,0" 
+                     GroupName="Target"
+                     IsChecked="{Binding authTypeCloud}"/>
+        <RadioButton x:Name="ConfigEnvironmentOnPremise" Content="On-Premise" Style="{StaticResource RadioButtonConfigs}" 
+                     Margin="194,347,0,0" 
+                     GroupName="Target" 
+                     IsChecked="{Binding authTypeOnPrem}"/>
+        <GroupBox x:Name="CloudGroupBox" Header="Cloud" Style="{StaticResource GroupBoxHeaderConfigs}" Margin="118,375,0,0" Height="355" Width="354" IsEnabled="{Binding authTypeCloud}">
+            <Grid Height="324" Margin="2,0,-2,0">
+                <Label x:Name="ConfigTenantLabel" Content="Tenant ID" Style="{StaticResource LabelConfigs}" Margin="10,4,0,0" />
+                <TextBox x:Name="ConfigTenantInput"  Style="{StaticResource TextBoxConfigs}" Margin="0,34,0,0" HorizontalAlignment="Center">
+                    <Binding Path="tenantId" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" isGuid="True" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+                <Label x:Name="ConfigEnvironmentLabel" Content="Nombre del entorno" Style="{StaticResource LabelConfigs}" Margin="10,83,0,0" />
+                <TextBox x:Name="ConfigEnvironmentInput" Style="{StaticResource TextBoxConfigs}" Margin="0,112,0,0" HorizontalAlignment="Center">
+                    <Binding Path="environment" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" maxLength="2048" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+                <Label x:Name="ConfigClientIdLabel" Content="Client ID"  Style="{StaticResource LabelConfigs}" Margin="10,162,0,0" />
+                <TextBox x:Name="ConfigClientIdInput" Style="{StaticResource TextBoxConfigs}" Margin="0,191,0,0" HorizontalAlignment="Center">
+                    <Binding Path="clientId" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" isGuid="True" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+                <Label x:Name="ConfigSecretLabel" Content="Client Secret" Style="{StaticResource LabelConfigs}" Margin="10,237,0,0" />
+                <TextBox x:Name="ConfigSecretInput" Style="{StaticResource TextBoxConfigs}" Margin="0,268,0,0" HorizontalAlignment="Center">
+                    <Binding Path="clientSecret" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" maxLength="2048" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="OnPremiseGroupBox" Header="On-Premise" Style="{StaticResource GroupBoxHeaderConfigs}" Margin="484,375,0,0" Width="354" IsEnabled="{Binding authTypeOnPrem}" Height="355">
+            <Grid Height="324" Margin="2,0,-2,0">
+                <Label x:Name="ConfigUrlLabel" Content="Url" Style="{StaticResource LabelConfigs}" Margin="10,4,0,0" />
+                <TextBox x:Name="ConfigUrlInput" Style="{StaticResource TextBoxConfigs}" Margin="0,34,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch">
+                    <Binding Path="onPremiseUrl" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" maxLength="2048" isUrl="true" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+                <Label x:Name="ConfigOnPremiseAuth" Content="Tipo autentificación" Style="{StaticResource LabelConfigs}" Margin="10,83,0,0" />
+                <Label x:Name="ConfigPasswordLabel" Content="Contraseña" Style="{StaticResource LabelConfigs}" 
+                Margin="10,237,0,0"/>
+                <RadioButton x:Name="ConfigNTLM" Content="NTLM"  Style="{StaticResource RadioButtonConfigs}" 
+                    Margin="24,120,0,0" 
+                    GroupName="Autentication"
+                    IsChecked="{Binding NtlmAuthTypeOnPrem}"/>
+                <RadioButton x:Name="ConfigBasicOnPremise" Content="Basic" Style="{StaticResource RadioButtonConfigs}" 
+                    Margin="108,120,0,0" 
+                    GroupName="Autentication" 
+                    IsChecked="{Binding basicAuthTypeOnPrem}"/>
+
+
+                <Label x:Name="ConfigUserLabel" Content="Usuario" Style="{StaticResource LabelConfigs}" Margin="10,162,0,0"/>
+                <TextBox x:Name="ConfigUserInput" Style="{StaticResource TextBoxConfigs}" Margin="0,191,0,0"  HorizontalAlignment="Center" HorizontalContentAlignment="Stretch">
+                    <Binding Path="onPremiseUser" UpdateSourceTrigger="Default">
+                        <Binding.ValidationRules>
+                            <Validation:StringValidationRule ValidatesOnTargetUpdated="True" maxLength="2048" isRequired="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+                <components:BindablePasswordBox Margin="0,268,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="308" Height="34" Password="{Binding Password}"/>
+                <!-- TODO: Debe ser de tipo Password y ocultar contraseña con asteriscos -->
+            </Grid>
+        </GroupBox>
+        <!-- API -->
+        <Label x:Name="APILabelGroup" Content="API" Style="{StaticResource LabelConfigsGrupo}" Margin="452,759,0,0" HorizontalAlignment="Left" />
+        <Separator Style="{StaticResource SeparatorConfigs}" Margin="118,798,0,0" Width="722" HorizontalAlignment="Left"/>
+
+        <Label x:Name="ConfigApiPortLabel" Content="Puerto" Style="{StaticResource LabelConfigs}" Margin="116,819,0,0" />
+        <TextBox x:Name="ConfigApiPortInput" Style="{StaticResource TextBoxConfigs}" Margin="115,847,528,0">
+            <TextBox.Text>
+                <Binding Path="apiPort" UpdateSourceTrigger="Default">
+                    <Binding.ValidationRules>
+                        <Validation:IntegerValidationRule ValidatesOnTargetUpdated="True" minRange="1" maxRange="65535" isRequired="True"/>
+                        <Validation:PortValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="ConfigApiKeyLabel" Content="API Key" Style="{StaticResource LabelConfigs}" Margin="530,814,0,0" />
+        <TextBox x:Name="ConfigApiKeyInput" Style="{StaticResource TextBoxConfigs}" Margin="528,847,115,0">
+            <Binding Path="apiKey" UpdateSourceTrigger="Default">
+                <Binding.ValidationRules>
+                    <Validation:StringValidationRule ValidatesOnTargetUpdated="True" minLength="32" maxLength="32" isRequired="True" />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+
+        <CheckBox x:Name="EnableHttpsPort"  Style="{StaticResource CheckBoxConfigs}" Margin="119,897,0,0"
+                  IsChecked="{Binding EnableHttpsPort}" Content="Habilitar conexión segura HTTPS" />
+
+        <Label x:Name="ClientCertificateNameLabel" Content="Huella digital del certificado" Style="{StaticResource LabelConfigs}" Margin="119,919,0,0" />
+        <TextBox x:Name="ClientCertificateNameInput" Style="{StaticResource TextBoxConfigs}" IsEnabled="{Binding EnableHttpsPort}" Margin="118,947,525,0" Cursor="IBeam">
+            <Binding Path="clientCertificate" UpdateSourceTrigger="Default">
+                <Binding.ValidationRules>
+                    <Validation:StringValidationRule ValidatesOnTargetUpdated="True" isRequired="True" />
+                    <Validation:ClientCertificateValidationRule ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+
+        <Button Content="Configurar modulos" Cursor="Hand" FontFamily="Bahnschrift" HorizontalAlignment="Left" Height="36" FontSize="14" FontWeight="Bold" Margin="716,14,0,0" VerticalAlignment="Top" Width="148" Click="ShowModulesSetup" Background="{x:Null}"/>
+        <!--
+        <PasswordBox x:Name="PassField" HorizontalAlignment="Left" Margin="101,656,0,0" VerticalAlignment="Top" Width="308" Height="34">
+            <Binding Path="apiKey" UpdateSourceTrigger="Default">
+                <Binding.ValidationRules>
+                    <Validation:StringValidationRule ValidatesOnTargetUpdated="True" minLength="32" maxLength="32" isRequired="True" />
+                </Binding.ValidationRules>
+            </Binding>
+        </PasswordBox>-->
+    </Grid>
+</Page>

@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                    
+                    xmlns:tb="http://www.hardcodet.net/taskbar"
+                    xmlns:local="clr-namespace:WPF">
+    
+    <!-- Config - ContextMenu For IconTray -->
+    <ContextMenu x:Shared="true" x:Key="SysTrayMenu">
+        <MenuItem Header="Cerrar aplicación" Command="{Binding ExitApplicationCommand}" />
+    </ContextMenu>
+
+    <!-- Config - NotifyIcon -->
+    <tb:TaskbarIcon x:Key="NotifyIcon"
+                    IconSource="/Resource/Images/logo.ico"
+                    ToolTipText="Doble-click para abrir, click-derecho para menú"
+                    DoubleClickCommand="{Binding ShowWindowCommand}"
+                    ContextMenu="{StaticResource SysTrayMenu}">
+
+        <!-- Config - NotifyIcon DataContext-->
+        <tb:TaskbarIcon.DataContext>
+            <local:NotifyIconViewModel/>
+        </tb:TaskbarIcon.DataContext>
+    </tb:TaskbarIcon>
+</ResourceDictionary>
