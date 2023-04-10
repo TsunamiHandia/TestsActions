@@ -4,10 +4,11 @@ on:
     branches: [ "main" ]
     
 jobs:
-  test:
-    runs-on: windows-2022
-    name: Test solution    
+  test:  
+    runs-on: self-hosted
+#    runs-on: windows-2022
     
+    name: Test solution   
     steps:
 #    - name: Checkout
 #      uses: actions/checkout@v2
