@@ -24,7 +24,7 @@ jobs:
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
     - name: Stop IIS
 #      run: Stop-Service -Name w3svc
-      run: Restart-Service -Nmae w3svc
+      run: Restart-Service -Name w3svc
      
 #    - name: Start Apache    
 #      run: |
