@@ -23,13 +23,14 @@ jobs:
         Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
     - name: Stop IIS
-#      run: Stop-Service -Name w3svc
-      run: Restart-Service -Name w3svc
+      run: Stop-Service -Name w3svc
+#      run: Restart-Service -Name w3svc
      
-#    - name: Start Apache    
-#      run: |
-#         Set-Service -Name Apache -StartupType Automatic
-#         Start-Service -DisplayName Apache
+    - name: Start Apache    
+      run: |
+         Set-Service -Name Apache -StartupType Automatic
+         Start-Service -DisplayName Apache
+         more c:\tools\Apache24\extra\httpd-fcgid.conf
 #        C:\tools\Apache24\bin\httpd.exe -k start -n Apache
 #        Start-Job { C:\tools\Apache24\bin\httpd.exe }
 #        C:\tools\Apache24\bin\httpd.exe -k install -f C:\tools\Apache24\conf\httpd.conf
