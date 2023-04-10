@@ -9,21 +9,26 @@ jobs:
     name: Test solution    
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+#    - name: Checkout
+#      uses: actions/checkout@v2
         
-    - name: Crear fichero php para rebotar peticiones
+    - name: Crear fichero php para rebotar peticiones Apache
       run: |
         New-Item C:\tools\Apache24\htdocs\index.php
-        Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);?>'        
-    # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
-    - name: Stop IIS
-      run: Stop-Service -Name w3svc
-     
-    - name: Start Apache    
+        Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);' 
+    
+    - name: Crear fichero php para rebotar peticiones IIS
       run: |
-         Set-Service -Name Apache -StartupType Automatic
-         Start-Service -DisplayName Apache
+        New-Item C:\inetpub\wwwroot\index.php
+        Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
+    # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
+#    - name: Stop IIS
+#      run: Stop-Service -Name w3svc
+     
+#    - name: Start Apache    
+#      run: |
+#         Set-Service -Name Apache -StartupType Automatic
+#         Start-Service -DisplayName Apache
 #        C:\tools\Apache24\bin\httpd.exe -k start -n Apache
 #        Start-Job { C:\tools\Apache24\bin\httpd.exe }
 #        C:\tools\Apache24\bin\httpd.exe -k install -f C:\tools\Apache24\conf\httpd.conf
@@ -36,9 +41,9 @@ jobs:
 #      run: |
 #          Test-NetConnection localhost -Port 80
           
-#    - name: Verify PHP is running
-#      run: |
-#          Invoke-WebRequest http://localhost/index.php?param=test
+    - name: Verify PHP is running
+      run: |
+          Invoke-WebRequest http://localhost/index.php?param=test
 #          Invoke-WebRequest https://testapache.free.beeceptor.com?param=test 
 #    - name: PostgreSQL
 #      uses: ikalnytskyi/action-setup-postgres@v4
@@ -57,5 +62,5 @@ jobs:
 #    - name: Test Access Runtime
 #      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
       
-    - name: Solution test
-      run: dotnet test --filter TestCategory=Repeater
+#    - name: Solution test
+#      run: dotnet test --filter TestCategory=Repeater
