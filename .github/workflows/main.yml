@@ -15,6 +15,7 @@ jobs:
         
     - name: Crear fichero php para rebotar peticiones Apache
       run: |
+        mkdir C:\tools\Apache24\htdocs
         New-Item C:\tools\Apache24\htdocs\index.php
         Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);' 
     
@@ -25,23 +26,19 @@ jobs:
  
     # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
     - name: Stop IIS
-      run: Stop-Service -Name w3svc
+#      run: Stop-Service -Name w3svc
 #      run: Restart-Service -Name w3svc
      
-    - name: Start Apache    
-      run: |
-         dir c:\
-         dir c:\tools\Apache24 /s
-         Set-Service -Name Apache -StartupType Automatic
-         Start-Service -DisplayName Apache
-         more c:\tools\Apache24\conf\extra\httpd-fcgid.conf
+#    - name: Start Apache    
+#      run: |
+#         Set-Service -Name Apache -StartupType Automatic
+#         Start-Service -DisplayName Apache         
 #        C:\tools\Apache24\bin\httpd.exe -k start -n Apache
 #        Start-Job { C:\tools\Apache24\bin\httpd.exe }
 #        C:\tools\Apache24\bin\httpd.exe -k install -f C:\tools\Apache24\conf\httpd.conf
          
     - name: getservices 
-      run: Get-Service -Name "Ap*","ng*","w3*" 
-        
+      run: Get-Service -Name "Ap*","ng*","w3*"         
 
 #    - name: Verify Apache is running
 #      run: |
@@ -62,11 +59,11 @@ jobs:
 #    - name: Run sqlclient
 #      run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
       
-#    - name: Choco Microsoft Access Database Engine 2010
-#      run: choco install made2010
+    - name: Choco Microsoft Access Database Engine 2010
+      run: choco install made2010
       
-#    - name: Test Access Runtime
-#      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
+    - name: Test Access Runtime
+      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
       
 #    - name: Solution test
 #      run: dotnet test --filter TestCategory=Repeater
