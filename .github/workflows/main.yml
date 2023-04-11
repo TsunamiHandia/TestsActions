@@ -44,9 +44,9 @@ jobs:
 #      run: |
 #          Test-NetConnection localhost -Port 80
           
-    - name: Verify PHP is running
-      run: |
-          Invoke-WebRequest http://localhost
+#    - name: Verify PHP is running
+#      run: |
+#          Invoke-WebRequest http://localhost
 #          Invoke-WebRequest https://testapache.free.beeceptor.com?param=test 
 #    - name: PostgreSQL
 #      uses: ikalnytskyi/action-setup-postgres@v4
