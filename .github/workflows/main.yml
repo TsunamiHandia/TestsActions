@@ -12,6 +12,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
+    - name: Set up Docker
+      uses: docker/setup-docker@v1
+    - name: Build and run Docker container
+      run: |
+        docker build -t my-github-runner c:\\c_temp\\docker
+        docker run -it --rm my-github-runner
         
     - name: Crear fichero php para rebotar peticiones Apache
       run: |
@@ -59,11 +66,11 @@ jobs:
 #    - name: Run sqlclient
 #      run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
       
-    - name: Choco Microsoft Access Database Engine 2010
-      run: choco install made2010
+#    - name: Choco Microsoft Access Database Engine 2010
+#      run: choco install made2010
       
-    - name: Test Access Runtime
-      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
+#    - name: Test Access Runtime
+#      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
       
 #    - name: Solution test
 #      run: dotnet test --filter TestCategory=Repeater
