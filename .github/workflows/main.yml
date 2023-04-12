@@ -17,7 +17,7 @@ jobs:
       uses: docker/setup-docker@v1
     - name: Build and run Docker container
       run: |
-        docker build -t my-github-runner c:\c_temp\Docker
+        docker build -t my-github-runner .
         docker run -it --rm my-github-runner
         
     - name: Crear fichero php para rebotar peticiones Apache
