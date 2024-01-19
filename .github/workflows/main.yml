@@ -12,18 +12,21 @@ jobs:
       run: |
         echo "Finished main of net6"
   create_pull_request:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: net6
-      - name: Reset net6 branch
+      - name: Set up Git
         run: |
-          git fetch origin main:main
-          git reset --hard main
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Set PR Title
+        id: set_pr_title
+        run: echo "PR_TITLE=Automated pull request from ${{ github.event_name }} branch: ${{ github.ref_name }}" >> $GITHUB_ENV
+
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: net6-promotion
+        run: |
+          git checkout -b net6
+          git push origin net6
+          gh pr create --base net6 --head main --title "${{ env.PR_TITLE }}" --body "Automated pull request from main to net6"
   
     
