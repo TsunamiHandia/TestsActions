@@ -1,0 +1,14 @@
+name: APP dev
+on:
+  push:
+    branches-ignore: [ "main" ]    
+jobs:
+  test:  
+    runs-on: windows-2022
+    
+    name: Test solution   
+    steps:
+    - name: Checkout
+      run: |
+        echo "Finished branch"
+        exit 0
