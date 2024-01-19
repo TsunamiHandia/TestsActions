@@ -19,14 +19,10 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Set PR Title
-        id: set_pr_title
-        run: echo "PR_TITLE=Automated pull request from ${{ github.event_name }} branch: ${{ github.ref_name }}" >> $GITHUB_ENV
-
       - name: Create Pull Request
         run: |
           git checkout -b net6
           git push origin net6
-          gh pr create --base net6 --head main --title "${{ env.PR_TITLE }}" --body "Automated pull request from main to net6"
+          gh pr create --base net6 --head main --title "PR_TITLE=Automated pull request from ${{ github.event_name }} branch: "${{ github.ref_name }}" --body "Automated pull request from main to net6"
   
     
