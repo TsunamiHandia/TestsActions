@@ -22,7 +22,7 @@ jobs:
       - name: Create Pull Request
         run: |
           git checkout -b net6
-          git push origin net6
+          git push main net6
           gh pr create --base net6 --head main --title "PR_TITLE=Automated pull request from ${{ github.event_name }} branch: ${{ github.ref_name }}" --body "Automated pull request from main to net6"
   
     
