@@ -1,76 +1,14 @@
 name: APP dev
 on:
   push:
-    branches: [ "main" ]
-    
+    branches: [ "main" ]    
 jobs:
   test:  
-    runs-on: self-hosted
-#    runs-on: windows-2022
+    runs-on: windows-2022
     
     name: Test solution   
     steps:
-#    - name: Checkout
-#      uses: actions/checkout@v2
-      
-    - name: Set up Docker
-      uses: docker/setup-docker@v1
-    - name: Build and run Docker container
+    - name: Checkout
       run: |
-        docker build -t my-github-runner .
-        docker run -it --rm my-github-runner
-        
-    - name: Crear fichero php para rebotar peticiones Apache
-      run: |
-        mkdir C:\tools\Apache24\htdocs
-        New-Item C:\tools\Apache24\htdocs\index.php
-        Set-Content C:\tools\Apache24\htdocs\index.php '<?php var_dump($_REQUEST);' 
-    
-#    - name: Crear fichero php para rebotar peticiones IIS
-#      run: |
-#        New-Item C:\inetpub\wwwroot\index.php
-#        Set-Content C:\inetpub\wwwroot\index.php '<?php var_dump($_REQUEST);' 
- 
-    # In my testing `IIS` was using port 80, we can stop `w3svc` service and start it after installing.
-#    - name: Stop IIS
-#      run: Stop-Service -Name w3svc
-#      run: Restart-Service -Name w3svc
-     
-#    - name: Start Apache    
-#      run: |
-#         Set-Service -Name Apache -StartupType Automatic
-#         Start-Service -DisplayName Apache         
-#        C:\tools\Apache24\bin\httpd.exe -k start -n Apache
-#        Start-Job { C:\tools\Apache24\bin\httpd.exe }
-#        C:\tools\Apache24\bin\httpd.exe -k install -f C:\tools\Apache24\conf\httpd.conf
-         
-    - name: getservices 
-      run: Get-Service -Name "Ap*","ng*","w3*"         
-
-#    - name: Verify Apache is running
-#      run: |
-#          Test-NetConnection localhost -Port 80
-          
-#    - name: Verify PHP is running
-#      run: |
-#          Invoke-WebRequest http://localhost
-#          Invoke-WebRequest https://testapache.free.beeceptor.com?param=test 
-#    - name: PostgreSQL
-#      uses: ikalnytskyi/action-setup-postgres@v4
-    
-#    - name: Run the action
-#      uses: potatoqualitee/mssqlsuite@v1.7
-#      with:
-#          install: sqlengine, sqlpackage
-
-#    - name: Run sqlclient
-#      run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
-      
-#    - name: Choco Microsoft Access Database Engine 2010
-#      run: choco install made2010
-      
-#    - name: Test Access Runtime
-#      run: reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes" /f "Microsoft.ACE.OLEDB.*"
-      
-#    - name: Solution test
-#      run: dotnet test --filter TestCategory=Repeater
+        echo "Finished branch"
+        exit 0
