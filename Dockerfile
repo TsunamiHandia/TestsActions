@@ -7,3 +7,4 @@
 # Base image for Windows Server 2019
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
+
