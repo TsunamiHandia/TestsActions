@@ -1,14 +1,1 @@
-name: APP dev
-on:
-  push:
-    branches-ignore: [ main, net6 ]    
-jobs:
-  test:  
-    runs-on: windows-2022
-    
-    name: Test solution   
-    steps:
-    - name: Checkout
-      run: |
-        echo "Finished branch in Net6"
-        exit 0
+
