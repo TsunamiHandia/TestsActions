@@ -1,7 +1,7 @@
 name: APP dev
 on:
   push:
-    branches: [ net6 ]    
+    branches: [ main ]    
 jobs:
   test:  
     runs-on: windows-2022
