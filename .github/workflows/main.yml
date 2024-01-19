@@ -1,7 +1,7 @@
 name: APP dev
 on:
   push:
-    branches: [ "main" ]    
+    branches: [ net6 ]    
 jobs:
   test:  
     runs-on: windows-2022
@@ -10,5 +10,5 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        echo "Finished main"
+        echo "Finished main of net6"
         exit 0
