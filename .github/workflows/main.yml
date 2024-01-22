@@ -25,4 +25,4 @@ jobs:
         echo "::set-output name=newString::$newString"
 
     - name: Use the variable
-      run: echo "Variable Without Spaces: ${{ needs.setVar.outputs.newString }}"
+      run: echo "Variable Without Spaces:${{ needs.setVar.outputs.newString }}"
