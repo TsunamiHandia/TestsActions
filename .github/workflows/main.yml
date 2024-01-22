@@ -23,4 +23,4 @@ jobs:
         echo "commitmessage=$newString" >> $env:GITHUB_OUTPUT
 
     - name: Use the variable
-      run: echo "Variable Without Spaces:${{ needs.setVar.outputs.commitmessage }}"
+      run: echo "Variable Without Spaces:${{ steps.setVar.outputs.commitmessage }}"
