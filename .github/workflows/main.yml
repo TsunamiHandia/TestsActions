@@ -20,4 +20,4 @@ jobs:
         echo $newString
         echo "commitmessage=$newString" >> $GITHUB_ENV
     - name: Use the variable
-      run: echo "Variable Without Spaces:${{ github.env.commitmessage }}"
+      run: echo "Variable Without Spaces:${{ env.commitmessage }}"
