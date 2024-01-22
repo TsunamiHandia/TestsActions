@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      id: setVar
-      outputs: 
         newString: ${{ steps.setVar.outputs.newString }}
 
     steps:
