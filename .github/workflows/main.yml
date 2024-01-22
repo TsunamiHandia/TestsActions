@@ -8,9 +8,6 @@ jobs:
   setVariable:
     runs-on: ubuntu-latest
 
-    outputs:
-        newString: ${{ steps.setVar.outputs.commitmessage }}
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -21,7 +18,7 @@ jobs:
         originalString="This is a sample string with spaces"
         newString=$(echo $originalString | tr ' ' '-')
         echo $newString
-        echo "commitmessage=$newString" >> $env:GITHUB_OUTPUT
+        echo "commitmessage=$newString" >> $GITHUB_ENV
 
     - name: Use the variable
-      run: echo "Variable Without Spaces:${{ steps.setVar.outputs.commitmessage }}"
+      run: echo "Variable Without Spaces:${{ env.commitmessage }}"
