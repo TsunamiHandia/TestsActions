@@ -16,7 +16,7 @@ jobs:
       id: setVar
       run: |
         originalString="This is a sample string with spaces"
-        newString="${{ github.event.head_commit.message }}" -replace '\s', '-'
+        newString=$(echo ${{ github.event.head_commit.message }} | tr ' ' '-')
         echo $newString
         echo "commitmessage=$newString" >> $GITHUB_ENV
 
