@@ -6,7 +6,7 @@ env:
   GH_TOKEN: ${{ github.token }}
 jobs:
   setVariable:
-    runs-on: windows2022
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -16,7 +16,7 @@ jobs:
       id: setVar
       run: |
         originalString="This is a sample string with spaces"
-        newString=$(echo ${{ github.event.head_commit.message }} | tr ' ' '-')
+        newString="${{ github.event.head_commit.message }}" -replace '\s', '-'
         echo $newString
         echo "commitmessage=$newString" >> $GITHUB_ENV
 
