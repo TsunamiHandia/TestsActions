@@ -15,9 +15,17 @@ jobs:
     - name: Set variable without spaces
       id: setVar
       run: |
-        originalString="This is a sample string with spaces"
-        newString=$(echo "${{ github.event.head_commit.message }}" | tr ' ' '-')
-        echo $newString
-        echo "commitmessage=$newString" >> $GITHUB_ENV
+        originalString=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+        # Replace spaces with hyphens, and remove invalid characters
+        sanitizedString=$(echo "$originalString" | tr -cs '[:alnum:]_-' '-')
+
+        # Trim leading and trailing hyphens
+        sanitizedString=$(echo "$sanitizedString" | sed 's/^-//;s/-$//')
+
+        # Convert to lowercase (optional)
+        sanitizedString=$(echo "$sanitizedString" | tr '[:upper:]' '[:lower:]')
+        
+        echo $sanitizedString
+        echo "commitmessage=$sanitizedString" >> $GITHUB_ENV
     - name: Use the variable
       run: echo "Variable Without Spaces:${{ env.commitmessage }}"
