@@ -27,5 +27,6 @@ jobs:
         
         echo $sanitizedString
         echo "commitmessage=$sanitizedString" >> $GITHUB_ENV
+        
     - name: Use the variable
       run: echo "Variable Without Spaces:${{ env.commitmessage }}"
