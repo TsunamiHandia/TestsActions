@@ -14,4 +14,8 @@ jobs:
     - name: Test contains
       id: test-contains
       if: contains(github.ref, 'mai')
-      run: echo OK
+      run: echo Contains OK
+    - name: Test not contains
+      id: test-not-contains
+      if: !contains(github.ref, 'xxx')
+      run: echo Not contains OK
