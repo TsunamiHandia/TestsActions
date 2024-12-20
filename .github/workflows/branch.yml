@@ -17,5 +17,5 @@ jobs:
       run: echo Contains OK
     - name: Test not contains
       id: test-not-contains
-      if: ! contains(github.ref, 'xxx')
+      if: ${{ ! contains(github.ref, 'xxx') }}
       run: echo Not contains OK
