@@ -13,5 +13,5 @@ jobs:
       run: echo ${{ github.ref }}
     - name: Test contains
       id: test-contains
-      if: contains(github.ref, 'act')
+      if: contains(github.ref, 'mai')
       run: echo OK
