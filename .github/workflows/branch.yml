@@ -1,14 +1,14 @@
 name: APP dev
 on:
   push:
-    branches-ignore: [ main, net6 ]    
+    branches: [ main ]
 jobs:
-  test:  
-    runs-on: windows-2022
+  test:
+    name: Tests
+    runs-on: ubuntu
     
-    name: Test solution   
     steps:
-    - name: Checkout
-      run: |
-        echo "Finished branch in Net6"
-        exit 0
+    - name: Test contains
+      id: test-contains
+      if: contains(github.ref, 'act')
+      run: echo OK
