@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Write GitHub ref
+      id: write_ref
+      run: echo github.ref
     - name: Test contains
       id: test-contains
       if: contains(github.ref, 'act')
